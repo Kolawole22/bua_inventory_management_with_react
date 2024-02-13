@@ -107,16 +107,16 @@ function InventoryItem() {
           <h2 className="text-3xl font-semibold mb-4">{state.equipment}</h2>
 
           {/* Item Details */}
-          <div className="grid grid-cols-2 gap-4 my-8 ">
+          <div className="grid grid-cols-2 gap-4 my-8  w-full  justify-items-center">
             <button
-              className="px-8 md:w-[30%] w-[100%] py-2 text-[#efae31] text-sm md:text-lg bg-white  border-gray-300 hover:bg-gray-200 shadow-lg"
+              className="px-8 w-[30%] sm:w-[100%] py-2 text-[#efae31] text-sm md:text-lg bg-white  border-gray-300 hover:bg-gray-200 shadow-lg"
               onClick={openModal}
               disabled={state.assigned == true}
             >
               Check in
             </button>
             <button
-              className="px-8 md:w-[30%] w-[100%] py-2 text-[#efae31] text-sm md:text-lg bg-white  border-gray-300 hover:bg-gray-200 shadow-lg"
+              className="px-8 w-[30%] sm:w-[100%] py-2 text-[#efae31] text-sm md:text-lg bg-white  border-gray-300 hover:bg-gray-200 shadow-lg"
               onClick={handleCheckoutConfirmation}
             >
               Check out

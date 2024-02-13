@@ -14,13 +14,13 @@ import {
 } from "react-router-dom";
 import Root from "./routes/root.tsx";
 import ErrorPage from "./routes/error-page.tsx";
-import Retrieved from "./routes/retrieved.tsx";
+
 import AddItem from "./routes/addItem.tsx";
 //import Nav from "./components/nav.tsx";
 import InventoryItem from "./routes/inventoryItem.tsx";
 import Inventory from "./routes/inventory.tsx";
 import { ToastContainer } from "react-toastify";
-import RetrievedItem from "./routes/retrievedItem.tsx";
+
 //import Login from "./components/Login";
 //import { isAuthenticated } from "./services/authService";
 import Login from "./routes/login.tsx";
@@ -86,16 +86,7 @@ function App() {
           element: <InventoryItem />,
           errorElement: <ErrorPage />,
         },
-        {
-          path: "/retrieved/:id",
-          element: <RetrievedItem />,
-          errorElement: <ErrorPage />,
-        },
-        {
-          path: "/retrieved",
-          element: <Retrieved />,
-          errorElement: <ErrorPage />,
-        },
+
         {
           path: "/add-item",
           element: <AddItem />,

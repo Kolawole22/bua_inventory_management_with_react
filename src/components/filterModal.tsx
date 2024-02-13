@@ -54,13 +54,14 @@ function FilterModal({
   };
 
   return (
-    <div className="w-screen bg-gray-200">
+    <div className="w-screen bg-gray-200 text-black ">
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        style={customStyles}
+        //style={customStyles}
         contentLabel="Example Modal"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:w-[90%]  w-[50%] bg-gray-400 rounded-md py-12 sm:py-4 text-black"
       >
         {/* <div className="justify-start items-end">
           <button
@@ -70,12 +71,12 @@ function FilterModal({
             Close
           </button>
         </div> */}
-        <div className="w-full mt-8">
+        <div className="w-full mt-8 text-white">
           <div className="justify-center items-center flex text-lg font-semibold">
             Advanced Filter
           </div>
           <div className="flex flex-row justify-around">
-            <div className="flex flex-col border border-gray-300 px-4 rounded-md ">
+            <div className="flex flex-col border border-gray-100 px-4 rounded-md ">
               <div className="font-semibold ">Filter by Subsidiary</div>
               {subsidiary.map((item) => (
                 <div key={item} className="">
@@ -86,9 +87,11 @@ function FilterModal({
                     value={item}
                     checked={filters.subsidiary === item}
                     onChange={handleFilterChange}
-                    className="mr-2"
+                    className="mr-2 text-black "
                   />
-                  <label htmlFor={item}>{item}</label>
+                  <label className="" htmlFor={item}>
+                    {item}
+                  </label>
                 </div>
               ))}
               <div className="flex flex-row ">
@@ -102,7 +105,7 @@ function FilterModal({
             </div>
             <div className="flex flex-col border border-gray-300 rounded-md px-4">
               <div className="font-semibold">has been checked in</div>
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center ">
                 <label className="mr-2" htmlFor="assigned">
                   Yes
                 </label>
@@ -113,9 +116,10 @@ function FilterModal({
                   value={"true"}
                   onChange={handleAssignedFilters}
                   checked={filters.assigned == "true"}
+                  className="bg-inherit"
                 />
               </div>
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center ">
                 <label className="mr-2 " htmlFor="assigned">
                   No
                 </label>
@@ -150,7 +154,7 @@ function FilterModal({
               </div>
             </div>
 
-            <div className="flex flex-col  ">
+            <div className="flex flex-col text-black ">
               {filters.subsidiary == "BUA Foods" && (
                 <>
                   <div className="font-semibold">Bua Foods</div>
@@ -164,7 +168,7 @@ function FilterModal({
                           value={item}
                           checked={filters.location === item}
                           onChange={handleBuaFoodsFilter}
-                          className="mr-2"
+                          className="mr-2 text-black"
                         />
                         <label htmlFor={item}>{item}</label>
                       </div>
@@ -196,7 +200,7 @@ function FilterModal({
                         value={item}
                         checked={filters.location === item}
                         onChange={handleBuaCementFilter}
-                        className="mr-2"
+                        className="mr-2 text-black"
                       />
                       <label htmlFor={item}>{item}</label>
                     </div>
@@ -221,7 +225,7 @@ function FilterModal({
               <select
                 value={filters.department}
                 onChange={handleDepartmentFilter}
-                className="mt-2 p-2 border border-gray-300 rounded-md"
+                className="mt-2 p-2 border border-gray-300 rounded-md text-black"
               >
                 <option value="">All Departments</option>
                 {departmentOptions.map((option) => (
@@ -271,13 +275,13 @@ function FilterModal({
 
         <div className="flex flex-row mt-[5%] justify-around">
           <button
-            className="  hover:text-red-500 text-red-700 bg-white"
+            className="  hover:text-red-500 text-red-700 bg-inherit"
             onClick={() => setFilters(emptyFilter)}
           >
             clear all
           </button>
 
-          <button className="flex justify-end  bg-white" onClick={closeModal}>
+          <button className="flex justify-end bg-inherit" onClick={closeModal}>
             Done
           </button>
         </div>

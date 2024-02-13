@@ -67,15 +67,18 @@ function Nav() {
       // className={`${
       //   isSticky ? "fixed top-0  " : "relative"
       // }  p-4 bg-[#b32e3c] h-[5vw] w-screen items-center flex z-10`}
-      className={`sticky p-4 bg-[#b32e3c] h-[5vw] w-screen items-center  flex top-0 z-10 ${
+      className={`sticky p-4 bg-[#b32e3c] sm:h-[12vw] h-[5vw] w-full items-center  flex top-0 z-10 ${
         scrollDirection === "down" ? "-top-24" : "top-0"
       }`}
     >
       <Link to={"/"}>
-        <img src={logoPath} className="mx-4 w-[4vw] h-[4-vw]" />
+        <img
+          src={logoPath}
+          className="mx-4 sm:w-[10vw] sm:h-[10vw] w-[4vw] h-[4vw]"
+        />
       </Link>
-      <nav className="flex-1 mr-8 ">
-        <ul className="flex flex-1 justify-end gap-4 md:text-lg text-sm">
+      <nav className="mr-8 flex-1">
+        <ul className="flex justify-end gap-4 text-lg sm:text-sm">
           <li>
             <NavLink
               to={`/inventory`}
@@ -111,7 +114,7 @@ function Nav() {
                 };
               }}
             >
-              Add to inventory
+              Add item
             </NavLink>
           </li>
         </ul>

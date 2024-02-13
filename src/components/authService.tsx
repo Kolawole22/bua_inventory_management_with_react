@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/",
+  baseURL: "http://192.168.108.160:8000/",
 });
 
 const setupInterceptors = (navigate) => {

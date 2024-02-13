@@ -27,7 +27,7 @@ const LoginView = () => {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 flex-1 min-w-screen  w-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 flex-1 min-w-screen  w-screen bg-white">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Login</h1>
       {errorMessage && (
         <p className="text-red-500 text-sm mb-4">{errorMessage}</p>

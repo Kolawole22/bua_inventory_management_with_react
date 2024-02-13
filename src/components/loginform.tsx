@@ -31,7 +31,7 @@ const LoginForm = ({ credentials, setCredentials }) => {
     });
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/login/",
+        "http://192.168.108.160:8000/api/login/",
         credentials
       );
       console.log("response is:", response.data.access, response.data.refresh); // The token and other data returned from the backend
@@ -89,12 +89,12 @@ const LoginForm = ({ credentials, setCredentials }) => {
   return (
     <form
       onSubmit={handleLogin}
-      className="flex flex-col space-y-4 justify-center items-center w-[50%]"
+      className="flex flex-col space-y-4 justify-center items-center w-[90%]"
     >
       <input
         type="text"
         placeholder="Username"
-        className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-1 focus:ring-[#efae31] md:w-[50%] w-[100%]"
+        className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-1 text-black bg-white focus:ring-[#efae31] w-[40%] sm:w-[100%]"
         name="username"
         value={credentials.username}
         onChange={handleChange}
@@ -104,7 +104,7 @@ const LoginForm = ({ credentials, setCredentials }) => {
         type="password"
         placeholder="Password"
         id="password"
-        className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-1 focus:ring-[#efae31] md:w-[50%] w-[100%]"
+        className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-1 bg-white text-black focus:ring-[#efae31] w-[40%] sm:w-[100%]"
         name="password"
         value={credentials.password}
         onChange={handleChange}
@@ -112,7 +112,7 @@ const LoginForm = ({ credentials, setCredentials }) => {
       />
       <button
         type="submit"
-        className="bg-[#efae31] text-white rounded-md px-4 py-2 hover:bg-[#efaa31] md:w-[50%] w-[100%]"
+        className="bg-[#efae31] text-white rounded-md px-4 py-2 hover:bg-[#efaa31] w-[40%] sm:w-[100%]"
       >
         Login
       </button>

@@ -228,15 +228,15 @@ function AddItem() {
   }, []);
 
   const inputStyle =
-    "border-[2px] w-full rounded-md border-gray-300 focus:border-2 focus:border-[#efae31] outline-none py-1 shadow-lg";
+    "border-[2px] w-full rounded-md border-gray-300 focus:border-2 focus:border-[#efae31] outline-none py-1 shadow-lg bg-white";
   const labelStyle = "font-bold ";
-  const inputDiv = "form-group flex  flex-col md:w-[30%] w-[70%]";
+  const inputDiv = "form-group flex  flex-col w-[30%] sm:w-[70%]";
   // nt.scrollIntoView({ behavior: "smooth", block: "start" });
   //     window.scrollTo({ top: yCoordinate, behavior: "smooth" });
   //   };
 
   return (
-    <div className="flex flex-1 w-screen min-h-screen flex-col  bg-gray-200 ">
+    <div className="flex flex-1 w-screen min-h-screen flex-col  bg-white ">
       <div className="flex flex-1 justify-center mt-4 w-full rounded-lg items-center">
         {/* <form className="w-[80%] py-8 ">
         label
@@ -248,7 +248,7 @@ function AddItem() {
         {/* <div>{tagNumber}</div> */}
 
         <form
-          className="md:w-[80%] py-4 my-8 flex flex-1  items-center flex-col gap-8 grid-cols-8 md:mx-24 mx-4 shadow-lg bg-white rounded-lg  "
+          className="w-[80%] sm:w-full py-4 my-8 flex flex-1  items-center flex-col gap-8 grid-cols-8 mx-24 sm:mx-4 shadow-lg bg-white rounded-lg text-black "
           onSubmit={handleSubmit}
         >
           <div className={inputDiv}>
@@ -556,7 +556,7 @@ function AddItem() {
         </div> */}
 
           <button
-            className="md:w-[30%] w-[70%] bg-[#b32e36] hover:bg-[#94252c] text-white shadow-md "
+            className="w-[30%] sm:w-[70%] bg-[#b32e36] hover:bg-[#94252c] text-white shadow-md "
             type="submit"
           >
             Submit

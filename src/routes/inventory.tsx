@@ -30,7 +30,7 @@ import PaginatedItems from "../components/pagination";
 
 function Inventory() {
   //const [assignedInventory, setAssignedInventory] = useState([]);
-  const [isLoading, setIsloading] = useState(true);
+  const [isLoading, setIsloading] = useState(false);
 
   //let data = useLoaderData();
   const [inventory, setInventory] = useState([]);
@@ -65,6 +65,7 @@ function Inventory() {
     };
   };
   const fetchInventory = useCallback(async () => {
+    setIsloading(true);
     try {
       const tokenData = localStorage.getItem("accessToken");
       const headers = {
@@ -107,20 +108,40 @@ function Inventory() {
     //console.log("items", assignedInventory);
   });
 
-  const downloadData = () => {
-    const header = Object.keys(inventory[0]).join(",");
+  const downloadData = async () => {
+    try {
+      const tokenData = localStorage.getItem("accessToken");
+      const headers = {
+        //"Content-Type": "application/json",
+        //Authorization: `Bearer ${tokenData}`,
+        responseType: "blob",
+      };
 
-    const csvData = inventory
-      .map((row) => Object.values(row).join(","))
-      .join("\n");
+      const response = await api.get("api/download-csv/", {
+        headers: headers,
+      });
+      if (response) {
+        const blob = new Blob([response.data], { type: "text/csv" });
 
-    const finalCsvData = `${header}\n${csvData}`;
+        // Create a URL for the blob object
+        const url = window.URL.createObjectURL(blob);
 
-    // Create a Blob object with the CSV data
-    const blob = new Blob([finalCsvData], { type: "text/csv" });
+        // Create a link element
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "inventory_data.csv"); // Set the filename for the download
+        document.body.appendChild(link);
 
-    // Save the Blob object as a file
-    saveAs(blob, "inventory.csv");
+        // Trigger the download by simulating a click on the link
+        link.click();
+
+        // Remove the link element
+        document.body.removeChild(link);
+      }
+    } catch (error) {
+      //navigate("/error-page");
+      console.error(error);
+    }
   };
 
   //console.log("loaded data", loaded);
@@ -205,12 +226,12 @@ function Inventory() {
     console.log(filters);
   }, [filters]);
   return (
-    <div className="flex flex-1 w-screen min-h-screen flex-col">
-      <div className="bg-slate-300">
-        <div className="md:mx-16 mx-6 mt-8 flex-col md:flex-row flex justify-between ">
+    <div className="flex flex-1 flex-col min-h-screen">
+      <div className="bg-slate-300 w-full">
+        <div className=" mt-8 flex-row sm:flex-col flex justify-between ">
           {/* <h2>Assigned Inventory</h2> */}
 
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 ml-4">
             <input
               type="text"
               placeholder="Search Tag Number..."
@@ -218,9 +239,9 @@ function Inventory() {
               onChange={(e) =>
                 setFilters({ ...filters, tag_number: e.target.value })
               }
-              className=" outline-none border-b-[2px] bg-gray-100 border-[#b32e36] rounded-sm py-1 md:px-8"
+              className=" outline-none border-b-[2px] bg-gray-100 border-[#b32e36] rounded-sm py-1 sm:px-0 text-black"
             />
-            <div className="flex md:flex-row flex-col items-center ">
+            <div className="flex sm:flex-col flex-row items-center ">
               {Object.entries(filters).map(([filterName, filterValue]) => (
                 <div key={filterName} className="mr-2">
                   {filterValue && (
@@ -245,7 +266,7 @@ function Inventory() {
                 </div>
               ))}
               {!Object.values(filters).some((value) => !!value) && (
-                <div className="bg-inherit text-[#b32e36] hover:text-[#d45058] ">
+                <div className="bg-inherit sm:text-sm text-[#b32e36]  hover:text-[#d45058] ">
                   <button onClick={openModal} className="bg-inherit">
                     Advanced filter
                   </button>
@@ -255,13 +276,13 @@ function Inventory() {
           </div>
           <button
             onClick={downloadData}
-            className="bg-[#b32e36] text-[#efae31] md:mt-0 mt-4"
+            className="bg-[#b32e36] text-[#efae31] mt-0 sm:w-[50%] sm:mt-4 mx-4"
           >
             download data
           </button>
         </div>
         {isLoading && (
-          <div className="flex flex-1 justify-center items-center w-screen min-h-screen">
+          <div className="flex flex-1 justify-center items-center w-full min-h-screen">
             <Dots size={36} />
           </div>
         )}
@@ -282,52 +303,54 @@ function Inventory() {
           handleFilterChange={handleFilterChange}
           setFilters={setFilters}
         />
-        <ul className="bg-slate-300 my-2 min-h-screen">
-          {inventory.map((item) => (
-            <li key={item.id}>
-              <Link to={`/inventory/${item.id}`} state={item} key={item.id}>
-                <div className="container mx-auto mt-4 p-4">
-                  {/* Item Information Card */}
-                  <div className="bg-white rounded-lg p-6 shadow-md">
-                    {/* Item Title */}
-                    <h2 className="text-3xl font-semibold mb-4">
-                      {item.equipment}
-                    </h2>
+        {!isLoading && (
+          <ul className="bg-slate-300 my-2  ">
+            {inventory.map((item) => (
+              <li key={item.id}>
+                <Link to={`/inventory/${item.id}`} state={item} key={item.id}>
+                  <div className="mx-auto mt-4">
+                    {/* Item Information Card */}
+                    <div className="bg-white rounded-lg p-6 shadow-md">
+                      {/* Item Title */}
+                      <h2 className="text-3xl font-semibold mb-4">
+                        {item.equipment}
+                      </h2>
 
-                    {/* Item Details */}
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-gray-500">Model</p>
-                        <p className="text-lg font-semibold">{item.model}</p>
+                      {/* Item Details */}
+                      <div className="grid grid-cols-2 sm:flex sm:flex-col gap-4">
+                        <div className="sm:flex-row sm:flex sm:gap-4 items-center">
+                          <p className="text-gray-500">Model</p>
+                          <p className="text-lg font-semibold">{item.model}</p>
+                        </div>
+                        <div className="sm:flex-row sm:flex sm:gap-4 items-center">
+                          <p className="text-gray-500">Tag Number</p>
+                          <p className="text-lg font-semibold">
+                            {item.tag_number}
+                          </p>
+                        </div>
+                        {/* Add more details as needed */}
                       </div>
-                      <div>
-                        <p className="text-gray-500">Tag Number</p>
-                        <p className="text-lg font-semibold">
-                          {item.tag_number}
-                        </p>
-                      </div>
-                      {/* Add more details as needed */}
-                    </div>
 
-                    {/* Additional Information */}
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="mt-4 ">
-                        <p className="text-gray-500">User:</p>
-                        <p className="text-lg">{item.user}</p>
-                      </div>
-                      <div className="mt-4">
-                        <p className="text-gray-500">Subsidiary</p>
-                        <p className="text-lg font-semibold">
-                          {item.subsidiary}
-                        </p>
+                      {/* Additional Information */}
+                      <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-col">
+                        <div className="sm:flex-row sm:flex sm:gap-4 items-center mt-4 sm:mt-0">
+                          <p className="text-gray-500 sm:w-[30%]">User:</p>
+                          <p className="text-lg">{item.user}</p>
+                        </div>
+                        <div className="sm:flex-row sm:flex sm:gap-4 items-center mt-4 sm:mt-0">
+                          <p className="text-gray-500">Subsidiary</p>
+                          <p className="text-lg font-semibold">
+                            {item.subsidiary}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
         <PaginatedItems
           itemsPerPage={10}
           pageCount={pageCount}

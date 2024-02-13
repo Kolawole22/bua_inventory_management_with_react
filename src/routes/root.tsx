@@ -15,9 +15,9 @@ export default function Root() {
   //   redirect("/inventory");
   // }, []);
   return (
-    <div className="flex flex-1 w-screen min-h-screen flex-col">
+    <div className="w-screen">
       <Nav />
-      <div>
+      <div className="w-[100%]">
         <Outlet />
       </div>
     </div>
