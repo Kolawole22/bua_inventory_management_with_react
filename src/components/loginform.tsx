@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useAuth } from "../authContext";
 import axios from "axios";
 import { redirect, useNavigate } from "react-router-dom";
-import api, { client, login } from "./authService";
+import api, { baseUrl, client, login } from "./authService";
 
 const LoginForm = ({ credentials, setCredentials }) => {
   //   const [username, setUsername] = useState("");
@@ -30,11 +30,8 @@ const LoginForm = ({ credentials, setCredentials }) => {
       isLoading: true,
     });
     try {
-      const response = await axios.post(
-        "http://192.168.108.160:8000/api/login/",
-        credentials
-      );
-      console.log("response is:", response.data.access, response.data.refresh); // The token and other data returned from the backend
+      const response = await axios.post(`${baseUrl}api/login/`, credentials);
+      console.log("response is:", response.data); // The token and other data returned from the backend
       // Store the token in localStorage or elsewhere for future requests
 
       // Store the tokens in localStorage or elsewhere for future requests
@@ -43,6 +40,7 @@ const LoginForm = ({ credentials, setCredentials }) => {
         console.log(`token is ${token}`);
         localStorage.setItem("accessToken", token.access);
         localStorage.setItem("refreshToken", token.refresh);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         toast.dismiss(loadingToastId);
         toast.success("Logged in successfully", { autoClose: 1000 });
         navigate("/");

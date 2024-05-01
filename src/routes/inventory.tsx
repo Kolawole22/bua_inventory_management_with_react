@@ -45,6 +45,7 @@ function Inventory() {
   const [filters, setFilters] = useState({
     tag_number: "",
     subsidiary: "",
+    user: "",
     location: "",
     assigned: null,
     department: null, // New state for department filter
@@ -226,7 +227,7 @@ function Inventory() {
     console.log(filters);
   }, [filters]);
   return (
-    <div className="flex flex-1 flex-col min-h-screen">
+    <div className="flex flex-1 flex-col min-h-screen overflow-x-clip">
       <div className="bg-slate-300 w-full">
         <div className=" mt-8 flex-row sm:flex-col flex justify-between ">
           {/* <h2>Assigned Inventory</h2> */}

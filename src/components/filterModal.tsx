@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import Creatable from "react-select/creatable";
 import {
@@ -46,11 +46,21 @@ function FilterModal({
   const emptyFilter = {
     tag_number: "",
     subsidiary: "",
+    user: "",
     location: "",
     assigned: null,
     department: null, // New state for department filter
     date_before: null,
     date_after: null, // New state for date filter
+  };
+
+  const submitButtonRef = useRef(null);
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      // Scroll to the submit button when Enter is pressed
+      submitButtonRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -61,7 +71,7 @@ function FilterModal({
         onRequestClose={closeModal}
         //style={customStyles}
         contentLabel="Example Modal"
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:w-[90%]  w-[50%] bg-gray-400 rounded-md py-12 sm:py-4 text-black"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:w-[90%] h-[80vh] overflow-scroll mt-8 w-[50%] border border-gray-500 shadow-lg bg-gray-100 rounded-md py-12 sm:py-4 text-black"
       >
         {/* <div className="justify-start items-end">
           <button
@@ -71,7 +81,7 @@ function FilterModal({
             Close
           </button>
         </div> */}
-        <div className="w-full mt-8 text-white">
+        <div className="w-full mt-8 text-black">
           <div className="justify-center items-center flex text-lg font-semibold">
             Advanced Filter
           </div>
@@ -119,6 +129,7 @@ function FilterModal({
                   className="bg-inherit"
                 />
               </div>
+
               <div className="flex flex-row items-center ">
                 <label className="mr-2 " htmlFor="assigned">
                   No
@@ -132,6 +143,7 @@ function FilterModal({
                   checked={filters.assigned == "false"}
                 />
               </div>
+
               {/* <div className="flex flex-row items-center">
                 <label className="mr-2 " htmlFor="assigned">
                   
@@ -151,6 +163,19 @@ function FilterModal({
                 >
                   clear
                 </button>
+              </div>
+
+              <div className="w-40 mt-8 ">
+                <input
+                  className="w-full outline-none border-b-[2px] bg-gray-100 border-[#b32e36] rounded-sm py-1 sm:px-0 text-black"
+                  placeholder="Search user"
+                  onKeyDown={handleKeyPress}
+                  name="user"
+                  value={filters.user}
+                  onChange={(e) =>
+                    setFilters({ ...filters, user: e.target.value })
+                  }
+                />
               </div>
             </div>
 
@@ -281,7 +306,11 @@ function FilterModal({
             clear all
           </button>
 
-          <button className="flex justify-end bg-inherit" onClick={closeModal}>
+          <button
+            className="flex justify-end bg-inherit"
+            onClick={closeModal}
+            ref={submitButtonRef}
+          >
             Done
           </button>
         </div>

@@ -3,8 +3,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
+export const baseUrl = "http://192.168.204.8:8000/";
+
 const api = axios.create({
-  baseURL: "http://192.168.108.160:8000/",
+  baseURL: baseUrl,
+  //withCredentials: true,
 });
 
 const setupInterceptors = (navigate) => {
@@ -31,9 +34,11 @@ const setupInterceptors = (navigate) => {
             );
 
             const newAccessToken = refreshResponse.data.access;
+            const newRefreshToken = refreshResponse.data.refresh;
 
             // Store the new access token
             localStorage.setItem("accessToken", newAccessToken);
+            localStorage.setItem("refreshToken", newRefreshToken);
 
             // Retry the original request with the new access token
             error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;

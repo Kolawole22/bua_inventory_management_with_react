@@ -1,10 +1,27 @@
 import React, { useEffect, useState } from "react";
 import logoPath from "../assets/buagrouplogo.webp";
-import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+  useRoutes,
+} from "react-router-dom";
+import api from "./authService";
 
 function Nav() {
   const location = useLocation();
   //const[(navColor, setNavColor)] = useState("");
+
+  const [userDetails, setUserDetails] = useState(null);
+
+  useEffect(() => {
+    // Retrieve user details from localStorage and set userDetails state
+    const userDetailsFromLocalStorage = JSON.parse(
+      localStorage.getItem("user")
+    );
+    setUserDetails(userDetailsFromLocalStorage);
+  }, []);
 
   const navColor = (nav) => {
     //console.log(location.pathname);
@@ -62,6 +79,18 @@ function Nav() {
 
   const scrollDirection = useScrollDirection();
 
+  const navigate = useNavigate();
+
+  const signOut = async () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    await api.post("api/logout/").then((resp) => {
+      if (resp.data.success) {
+        navigate("/login");
+      }
+    });
+  };
+
   return (
     <div
       // className={`${
@@ -77,7 +106,7 @@ function Nav() {
           className="mx-4 sm:w-[10vw] sm:h-[10vw] w-[4vw] h-[4vw]"
         />
       </Link>
-      <nav className="mr-8 flex-1">
+      <nav className=" flex-1">
         <ul className="flex justify-end gap-4 text-lg sm:text-sm">
           <li>
             <NavLink
@@ -116,6 +145,26 @@ function Nav() {
             >
               Add item
             </NavLink>
+          </li>
+          {userDetails !== null && userDetails.is_superuser && (
+            <li>
+              <a
+                href="http://192.168.204.8:8000/admin/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-[#efae31]"
+              >
+                Admin
+              </a>
+            </li>
+          )}
+          <li>
+            <button
+              className="bg-inherit items-center text-white hover:text-[#efae31] px-0 py-0 mr-8"
+              onClick={signOut}
+            >
+              Log Out
+            </button>
           </li>
         </ul>
       </nav>

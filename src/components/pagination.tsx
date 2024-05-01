@@ -25,7 +25,7 @@ export default function PaginatedItems({
   };
 
   return (
-    <div className="flex justify-center mb-4">
+    <div className="flex justify-center mb-4 sm:overflow-x-scroll">
       <ReactPaginate
         breakLabel="..."
         nextLabel="next >"
