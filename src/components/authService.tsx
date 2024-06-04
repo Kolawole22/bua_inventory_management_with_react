@@ -3,7 +3,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const baseUrl = "http://192.168.204.8:8000/";
+export const baseUrl = "http://127.0.0.1:8000/";
 
 const api = axios.create({
   baseURL: baseUrl,

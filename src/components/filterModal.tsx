@@ -97,7 +97,7 @@ function FilterModal({
                     value={item}
                     checked={filters.subsidiary === item}
                     onChange={handleFilterChange}
-                    className="mr-2 text-black "
+                    className="mr-2 text-black bg-white "
                   />
                   <label className="" htmlFor={item}>
                     {item}
@@ -115,7 +115,7 @@ function FilterModal({
             </div>
             <div className="flex flex-col border border-gray-300 rounded-md px-4">
               <div className="font-semibold">has been checked in</div>
-              <div className="flex flex-row items-center ">
+              <div className="flex flex-row items-center  ">
                 <label className="mr-2" htmlFor="assigned">
                   Yes
                 </label>
@@ -126,7 +126,7 @@ function FilterModal({
                   value={"true"}
                   onChange={handleAssignedFilters}
                   checked={filters.assigned == "true"}
-                  className="bg-inherit"
+                  className="bg-white "
                 />
               </div>
 
@@ -250,7 +250,7 @@ function FilterModal({
               <select
                 value={filters.department}
                 onChange={handleDepartmentFilter}
-                className="mt-2 p-2 border border-gray-300 rounded-md text-black"
+                className="mt-2 p-2 border border-gray-300 bg-white rounded-md text-black"
               >
                 <option value="">All Departments</option>
                 {departmentOptions.map((option) => (
@@ -286,13 +286,14 @@ function FilterModal({
                 type="date"
                 value={filters.date_after}
                 onChange={handleStartDateFilter}
-                className=" "
+                className=" rounded-md py-1 border border-gray-300"
               />
               <span className="mx-8">to</span>
               <input
                 type="date"
                 value={filters.date_before}
                 onChange={handleEndDateFilter}
+                className="rounded-md py-1 border border-gray-300"
               />
             </div>
           </div>
